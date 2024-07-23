@@ -1,0 +1,22 @@
+﻿@model GymManagement.Data.Models.Gym
+
+<form method="post" class="form-horizontal">
+        <div class="form-group">
+            <label asp-for="Location" class="control-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="DumbBells" class="control-label"></label>
+            <input asp-for="DumbBells" class="form-control" />
+            <span asp-validation-for="DumbBells" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Treadmills" class="control-label"></label>
+            <input asp-for="Treadmills" class="form-control" />
+            <span asp-validation-for="Treadmills" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" asp-action="Upsert" asp-controller="Gym" class="btn btn-primary" />
+        </div>
+ </form>
