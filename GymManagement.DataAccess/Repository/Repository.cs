@@ -7,10 +7,15 @@ namespace GymManagement.DataAccess.Repository
 	public class Repository<T> : IRepository<T> where T : class
 	{
 		private readonly GymDbContext _db;
-		private DbSet<T> dbset; 
+		private DbSet<T> dbset;
 
-		
-		public void Add(T entity)
+        public Repository(GymDbContext db)
+        {
+			_db = db;
+            this.dbset = db.Set<T>();
+        }
+
+        public void Add(T entity)
 		{
 			dbset.Add(entity);
 		}
@@ -23,10 +28,18 @@ namespace GymManagement.DataAccess.Repository
 		}
 
 		public IEnumerable<T> GetAll(string? includeproperties = null)
-		{
+			{
 			IQueryable<T> query = dbset;
 
-			return query.ToList();
+            if (!string.IsNullOrEmpty(includeproperties))
+            {
+                foreach (var includeProperty in includeproperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+
+            return query.ToList() ?? new List<T>();
 		}
 
 		public void Remove(T entity)

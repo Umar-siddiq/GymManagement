@@ -8,7 +8,7 @@ namespace GymManagement.DataAccess.Repository
 	{
 		private GymDbContext _db;
 
-		public GymRepository(GymDbContext db)
+		public GymRepository(GymDbContext db) : base(db)
 		{
 			_db = db;
 		}

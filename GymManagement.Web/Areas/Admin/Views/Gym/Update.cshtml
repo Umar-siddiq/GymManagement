@@ -1,0 +1,42 @@
+﻿@model GymManagement.Data.ViewModels.GymVM
+
+
+
+<div class="card shadow border-0 mt-4">
+    <div class="card header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Update Gym Branch</h2>
+            </div>
+        </div>
+    </div>
+
+
+<form method="post" asp-action="Update" class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Gym.Id" />
+
+        <div class="form-group">
+            <label asp-for="Gym.Location" class="control-label"></label>
+            <input asp-for="Gym.Location" class="form-control" />
+            <span asp-validation-for="Gym.Location" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Gym.DumbBells" class="control-label"></label>
+            <input asp-for="Gym.DumbBells" class="form-control" />
+            <span asp-validation-for="Gym.DumbBells" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Gym.Treadmills" class="control-label"></label>
+            <input asp-for="Gym.Treadmills" class="form-control" />
+            <span asp-validation-for="Gym.Treadmills" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+                <input type="submit" asp-action="Update" asp-controller="Gym" class="btn btn-primary"  />
+       
+        
+        </div>
+ </form>
+ </div>

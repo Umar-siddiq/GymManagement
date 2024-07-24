@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using GymManagement.DataAccess;
 using GymManagement.Utility.Services;
+using GymManagement.Data.IRepository;
+using GymManagement.DataAccess.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,11 @@ builder.Services.AddDbContext<GymDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<GymDbContext>().AddDefaultTokenProviders();
 
+
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = $"/Identity/Account/Login";
