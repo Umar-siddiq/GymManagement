@@ -4,8 +4,8 @@ using GymManagement.Data.Models;
 using GymManagement.Utility.Services;
 using GymManagement.Data.IRepository;
 using GymManagement.Data.ViewModels;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using GymManagement.DataAccess.Repository;
+using System.Text.Json;
+using Newtonsoft.Json;
 
 
 namespace GymManagement.Web.Areas.Admin.Controllers
@@ -17,6 +17,8 @@ namespace GymManagement.Web.Areas.Admin.Controllers
         private readonly IUnitOfWork _unitofwork;
         private readonly GymApiService _api;
 
+        private readonly ILogger<GymController> _logger; 
+
         public GymController(GymApiService api, GymDbContext db, IUnitOfWork unitofwork)
         {
             _db = db;
@@ -24,12 +26,12 @@ namespace GymManagement.Web.Areas.Admin.Controllers
             _unitofwork = unitofwork;
         }
 
-        public IActionResult Index()
-        {
-            List<Gym> GymList = _db.Gyms.ToList();
+        //public IActionResult Index()
+        //{
+        //    List<Gym> GymList = _db.Gyms.ToList();
 
-            return View(GymList);
-        }
+        //    return View(GymList);
+        //}
 
         public IActionResult Create()
         {
@@ -43,12 +45,12 @@ namespace GymManagement.Web.Areas.Admin.Controllers
             {
                 HttpResponseMessage response;
 
-                    response = await _api.CreateGymAsync(gym);
+                response = await _api.CreateGymAsync(gym);
 
 
-                if (response.IsSuccessStatusCode )
+                if (response.IsSuccessStatusCode)
                 {
-                   return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
                 }
 
                 else
@@ -59,8 +61,38 @@ namespace GymManagement.Web.Areas.Admin.Controllers
             return View(gym);
         }
 
-        
-        public IActionResult Update(int id)
+        [HttpGet]
+        public async Task<IActionResult> Index( string search) 
+        {
+            IEnumerable<Gym> gyms = new List<Gym>();
+
+            if (!string.IsNullOrEmpty(search)) 
+            {
+                var response = await _api.SearchGymAsync(search);
+
+                if (response.IsSuccessStatusCode) 
+                {
+					var jsonString = await response.Content.ReadAsStringAsync();
+                    gyms = JsonConvert.DeserializeObject<IEnumerable<Gym>>(jsonString);
+                        
+                    //System.Text.Json.JsonSerializer.Deserialize<IEnumerable<Gym>>
+                    //(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+				}
+            }
+            else
+            {
+                gyms = _db.Gyms.ToList();
+            }
+            return View(gyms);
+        }
+
+		[HttpGet]
+		public IActionResult Search(string search)
+		{
+			return RedirectToAction("Index", new { search});
+		}
+
+		public IActionResult Update(int id)
         {
             GymVM gymVM = new();
 
@@ -100,6 +132,8 @@ namespace GymManagement.Web.Areas.Admin.Controllers
 
             return View();
         }
+
+
 
 
 

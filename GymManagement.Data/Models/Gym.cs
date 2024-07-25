@@ -14,7 +14,6 @@ namespace GymManagement.Data.Models
         public int? Treadmills { get; set; }
 
 
-
 	}
 }
    

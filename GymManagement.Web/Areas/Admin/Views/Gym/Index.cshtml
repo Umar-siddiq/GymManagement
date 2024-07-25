@@ -9,11 +9,18 @@
 			</div>
 		</div>
 
+	<form method="get" asp-action="Search" asp-controller="Gym">
+		<div class="form-group row-2" placeholder="Enter a Location to Search">
+			<input type="text" name="search" class="form-control"/>
+		</div>
+			<button type="submit" class="btn btn-primary">Search</button>
+	</form>
+
 	<div class="card-body p-4">
 		<div class="row">
-			<div class="col-6">
-			</div>
 			<div class="text-end col-6">
+			
+
 				<a asp-controller="Gym" asp-action="Create" class="btn btn-primary">
 					Create new Gym Branch <i class="bi bi-plus-circle"></i>
 				</a>
@@ -21,7 +28,9 @@
 		</div>
 	</div>
 
-		<table class="table table-bordered table-striped">
+
+
+	<table class="table table-bordered table-hover table-striped">
 			<thead>
 			<tr>
 				<th> Locations </th>
@@ -29,13 +38,12 @@
 				<th> Actions </th>
 			</tr>
 		</thead>
-		<tbody>
+		<tbody >
 			  @foreach (var obj in Model.OrderBy(u=>u.Id))
 			{
 					<tr>
 						<td>@obj.Location</td>
 						<td>@obj.DumbBells  Dumbells @obj.Treadmills Treadmills</td>
-
 					<td>
 						<div class="btn-group" role="group">
 							<a asp-controller="Gym" asp-action="Update" asp-route-id="@obj.Id" class="btn btn-success mx-2">
@@ -51,7 +59,6 @@
 					</td>
 					
 					</tr>
-
 			}
 				
 		</tbody>

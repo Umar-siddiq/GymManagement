@@ -28,9 +28,9 @@ namespace GymManagement.Utility.Services
 
 			return await _httpClient.PutAsync($"https://localhost:7055/api/Admin/GymApi/{gymId}", content);
 		}
-		public async Task<HttpResponseMessage> SearchGymAsync(string name)
+		public async Task<HttpResponseMessage> SearchGymAsync(string query)
 		{
-			return await _httpClient.GetAsync($"https://localhost:7055/api/Admin/GymApi/{name}");
+			return await _httpClient.GetAsync($"https://localhost:7055/api/Admin/GymApi/search?query={query}");
 		}
 
 		public async Task<HttpResponseMessage> DeleteGymAsync(int gymId)

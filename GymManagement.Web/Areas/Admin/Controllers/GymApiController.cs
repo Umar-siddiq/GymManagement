@@ -1,12 +1,8 @@
 ﻿using GymManagement.DataAccess;
 using Microsoft.AspNetCore.Mvc;
 using GymManagement.Data.Models;
-using System.Linq;
 using GymManagement.Utility.Services;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 
 namespace GymManagement.Web.Areas.Admin.Controllers
@@ -52,7 +48,17 @@ namespace GymManagement.Web.Areas.Admin.Controllers
 			return CreatedAtAction(nameof(GetGym), new {id=gym.Id}, gym);
         }
 
-        public async Task<IActionResult> PutGym(int id, Gym gym) 
+		[HttpGet("{Search}")]
+		public async Task<ActionResult> Search(string query)
+		{
+			var gym = await _db.Gyms.Where(x => x.Location.Contains(query)).ToListAsync();
+
+
+
+			return Ok(gym);
+		}
+
+		public async Task<IActionResult> PutGym(int id, Gym gym) 
         {
             if( id != gym.Id) 
                 return BadRequest();
