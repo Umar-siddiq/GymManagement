@@ -4,6 +4,7 @@ using GymManagement.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymManagement.DataAccess.Migrations
 {
     [DbContext(typeof(GymDbContext))]
-    partial class GymDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240728070322_UserProfile")]
+    partial class UserProfile
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -324,27 +327,6 @@ namespace GymManagement.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.HasDiscriminator().HasValue("GymUser");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "14a375b4-db7b-466f-9a83-f6784a00f918",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "1cc249d1-ae1e-4b76-b6ca-116bb00538b8",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "33dd35bb-a089-492f-9330-6ea61836973e",
-                            TwoFactorEnabled = false,
-                            Age = 21,
-                            City = "Khaitan",
-                            Full_Name = "Test Name",
-                            Gender = "M",
-                            Height = 170,
-                            Membership = false,
-                            Type = "FullBody",
-                            Weight = 55
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

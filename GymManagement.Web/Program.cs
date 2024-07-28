@@ -5,6 +5,7 @@ using GymManagement.Utility.Services;
 using GymManagement.Data.IRepository;
 using GymManagement.DataAccess.Repository;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using GymManagement.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient<GymApiService>();
+
+builder.Services.AddHttpClient<GymUserApiService>();
 
 builder.Services.AddDbContext<GymDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -51,11 +54,37 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 
-using (var scope = app.Services.CreateScope()) 
-{
-    //_roleManager =
 
+using (var scope = app.Services.CreateScope())
+{
+	var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+	var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+	// Ensure roles exist
+	string[] roleNames = { Roles.Role_Admin, Roles.Role_Trainer, Roles.Role_Customer, Roles.Role_Member, Roles.Role_Company, Roles.Role_Employee };
+	foreach (var roleName in roleNames)
+	{
+		if (!await roleManager.RoleExistsAsync(roleName))
+		{
+			await roleManager.CreateAsync(new IdentityRole(roleName));
+		}
+	}
+
+	// Seed admin user
+	string adminEmail = "admin@gmail.com";
+	string adminPassword = "Test99_";
+
+	if (await userManager.FindByEmailAsync(adminEmail) == null)
+	{
+		var adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail };
+		var result = await userManager.CreateAsync(adminUser, adminPassword);
+		if (result.Succeeded)
+		{
+			await userManager.AddToRoleAsync(adminUser, Roles.Role_Admin);
+		}
+	}
 }
+
 
 app.MapControllerRoute(
     name: "default",

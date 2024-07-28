@@ -1,0 +1,84 @@
+﻿@model List<GymManagement.Data.Models.GymUser>
+
+<div class="card shadow border-0 mt-4">
+	<div class="card header bg-primary bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h2 class="text-light py-2"> Gym List</h2>
+			</div>
+		</div>
+	</div>
+
+	<form method="get" asp-action="Index" asp-controller="User">
+		<div class="form-group row-2" placeholder="Enter a Location to Search">
+			<input type="text" name="search" class="form-control" />
+		</div>
+		<button type="submit" class="btn btn-primary">Search</button>
+	</form>
+
+	<div class="card-body p-4">
+		<div class="row">
+			<div class="text-end col-6">
+
+
+				<a asp-controller="Gym" asp-action="Create" class="btn btn-primary">
+					Create new Gym Branch <i class="bi bi-plus-circle"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+
+
+
+	<table class="table table-bordered table-hover table-striped">
+		<thead>
+			<tr>
+				<th> Full Name </th>
+				<th> Email </th>
+				<th> Contact Number</th>
+				<th> City </th>
+				<th> Gender </th>
+				<th> MemberShip </th>
+				<th> Age </th>
+				<th> Weight </th>
+				<th> Height </th>
+				<th> Type </th>
+				<th> Actions </th>
+			</tr>
+
+		</thead>
+		<tbody>
+	
+			@foreach (var obj in Model.OrderBy(u => u.Age))
+			{
+				<tr>
+					<td> @obj.Full_Name </td>
+					<td> @obj.Email </td>
+					<td> @obj.PhoneNumber</td>
+					<td> @obj.City </td>
+					<td> @obj.Gender </td>
+					<td> @obj.Membership </td>
+					<td> @obj.Age </td>
+					<td> @obj.Weight kg </td>
+					<td> @obj.Height cm </td>
+					<td> @obj.Type </td>
+					<td>
+						<div class="btn-group" role="group">
+							<a asp-controller="User" asp-action="Update" asp-route-id="@obj.Id" class="btn btn-success mx-2">
+								 <i class="bi bi-pencil-square"></i> Edit
+							</a>
+							<form method="post" asp-action="Delete">
+								<input type="hidden" name="id" value="@obj.Id">
+								<button type="submit" asp-controller="User" asp-route-id="@obj.Id" asp-action="Delete" class="btn btn-danger mx-2">
+									 <i class="bi bi-pencil-square"></i> Delete
+								</button>
+							</form>
+						</div>
+					</td>
+ 
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+

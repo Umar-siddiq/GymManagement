@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Customer\Controllers\Users\" />
     <Folder Include="Areas\Identity\Data\" />
   </ItemGroup>
 

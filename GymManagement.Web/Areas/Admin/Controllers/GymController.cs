@@ -6,10 +6,13 @@ using GymManagement.Data.IRepository;
 using GymManagement.Data.ViewModels;
 using System.Text.Json;
 using Newtonsoft.Json;
+using GymManagement.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace GymManagement.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = Roles.Role_Admin)]
     [Area("Admin")]
     public class GymController : Controller
     {
@@ -26,13 +29,7 @@ namespace GymManagement.Web.Areas.Admin.Controllers
             _unitofwork = unitofwork;
         }
 
-        //public IActionResult Index()
-        //{
-        //    List<Gym> GymList = _db.Gyms.ToList();
-
-        //    return View(GymList);
-        //}
-
+        
         public IActionResult Create()
         {
             return View();

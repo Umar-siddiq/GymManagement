@@ -22,6 +22,11 @@ namespace GymManagement.DataAccess
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
 
+            builder.Entity<GymUser>().HasData(
+
+                new GymUser { Full_Name = "Test Name", Gender = "M", Age = 21, City = "Khaitan", Height = 170, Type = "FullBody", Membership = false, Weight = 55   }
+                );
+         
             builder.Entity<Gym>().HasData(
 
                 new Gym { Id = 1, Location = "Street 12 Abraq Khaitan", DumbBells = 15, Treadmills = 3  },

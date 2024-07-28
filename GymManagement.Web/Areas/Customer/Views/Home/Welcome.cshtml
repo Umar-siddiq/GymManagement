@@ -8,12 +8,19 @@
 
     <p>Thank you for registering! Please fill out your basic information.</p>
 
-    <form class="form-group form-control">
+    <form class="form-group form-control" asp-action="Update" asp-controller = "">
         <div class="row g-2">
             <div class="col-md form-group">
                 <label for="fullName">Full Name</label>
                 <input type="text" class="form-control" id="fullName" placeholder="Enter your full name">
             </div>
+
+
+            <div class="col-md form-group">
+                <label for="Contact">Contact Number</label>
+                <input type="text" class="form-control" id="Contact" placeholder="Enter your contact number">
+            </div>
+
 
             <div class="col-md form-group">
                 <label for="age">Age</label>
@@ -23,18 +30,13 @@
 
         <div class="row g-2">
             <div class="col-md form-group">
-                <label for="address1">Address Line 1</label>
-                <input type="text" class="form-control" id="address1" placeholder="Enter your address">
+                <label for="city">City</label>
+                <input type="text" class="form-control" id="city" placeholder="Enter your city">
             </div>
 
             <div class="col-md form-group">
-                <label for="address2">Address Line 2</label>
-                <input type="text" class="form-control" id="address2" placeholder="Enter your address">
-            </div>
-
-            <div class="col-md form-group">
-                <label for="workoutPreference">Select an Option</label>
-                <select class="form-select" id="workoutPreference">
+                <label for="Type">Select an Option</label>
+                <select class="form-select" id="Type">
                     <option selected>----</option>
                     <option value="1">Full Body</option>
                     <option value="2">Upper Body</option>
