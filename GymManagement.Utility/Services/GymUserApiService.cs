@@ -21,7 +21,7 @@ namespace GymManagement.Utility.Services
 
 			return await _httpClient.PostAsync("https://localhost:7055/api/Admin/GymUserApi", content);
 		}
-		public async Task<HttpResponseMessage> UpdateGymUserAsync(int gymUserId, GymUser gymUser) 
+		public async Task<HttpResponseMessage> UpdateGymUserAsync(string gymUserId, GymUser gymUser) 
 		{
 			var json = JsonSerializer.Serialize(gymUser);
 			var content = new StringContent(json, Encoding.UTF8 , "application/json");
@@ -33,7 +33,7 @@ namespace GymManagement.Utility.Services
 			return await _httpClient.GetAsync($"https://localhost:7055/api/Admin/GymUserApi/search?query={query}");
 		}
 
-		public async Task<HttpResponseMessage> DeleteGymUserAsync(int gymUserId)
+		public async Task<HttpResponseMessage> DeleteGymUserAsync(string gymUserId)
 		{
 			return await _httpClient.DeleteAsync($"https://localhost:7055/api/Admin/GymUserApi/{gymUserId}");
 		}

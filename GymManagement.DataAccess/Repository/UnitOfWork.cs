@@ -12,10 +12,14 @@ namespace GymManagement.DataAccess.Repository
         private GymDbContext _db;
         public IGymRepository Gym { get; private set; }
 
+        public IGymUserRepository GymUser { get; private set; }
+
+
         public UnitOfWork(GymDbContext db) 
         {
             _db = db;
             Gym = new GymRepository(_db);
+            GymUser = new GymUserRepository(_db);
         }
 
         public void Save() 

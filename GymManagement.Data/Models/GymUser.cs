@@ -16,5 +16,6 @@ namespace GymManagement.Data.Models
         public int Age  { get; set; }
         public string City { get; set; }
         public bool Membership { get; set; }
-    }
+        public string Role { get; set; }
+    }   
 }

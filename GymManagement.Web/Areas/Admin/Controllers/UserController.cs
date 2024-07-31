@@ -3,15 +3,13 @@ using GymManagement.Data.Models;
 using GymManagement.Data.ViewModels;
 using GymManagement.DataAccess;
 using GymManagement.Utility.Services;
-using GymManagement.Utility;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace GymManagement.Web.Areas.Admin.Controllers
 {
 
-    [Authorize(Roles = Roles.Role_Admin)]
+    //[Authorize(Roles = Roles.Role_Admin)]
     [Area("Admin")]
     public class UserController : Controller
     {
@@ -60,7 +58,18 @@ namespace GymManagement.Web.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string search)
         {
-            IEnumerable<GymUser> gymUser = _db.GymUsers.ToList();
+            IEnumerable<GymUser> gymUser = _db.GymUsers.ToList();//.Select(user => new GymUserViewModel
+            //{
+            //    Id = user.Id, 
+            //    Full_Name = user.Full_Name,
+            //    Email = user.Email,
+            //    PhoneNumber = user.PhoneNumber,
+            //    Type = user.Type,
+            //    Role = ResolveRole(user.Role)),
+            //    us
+
+
+            //}).ToList();
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -77,7 +86,10 @@ namespace GymManagement.Web.Areas.Admin.Controllers
             }
             else
             {
+
             }
+
+
             return View(gymUser);
         }
 
@@ -87,43 +99,41 @@ namespace GymManagement.Web.Areas.Admin.Controllers
             return RedirectToAction("Index", new { search });
         }
 
-        //public IActionResult Update(int id)
-        //{
-        //	GymVM gymVM = new();
+        public IActionResult Update(string id)
+        {
+            GymUser gymUser = new();
 
-        //	if (id == 0)
-        //		return View(gymVM);
+            if (id == null)
+                return View(gymUser);
 
-        //	else
-        //	{
-        //		gymVM.Gym = _unitofwork.Gym.Get(u => u.Id == id);
-        //		return View(gymVM);
-        //	}
+            else
+            {
+                gymUser = _unitofwork.GymUser.Get(u => u.Id == id);
+                return View(gymUser);
+            }
 
-        //}
+        }
 
 
         [HttpPost]
-        public async Task<IActionResult> Update(GymVM gymVM)
+        public async Task<IActionResult> Update(GymUser gymUser)
         {
             if (ModelState.IsValid)
             {
                 HttpResponseMessage response;
-                //response = await _api.UpdateGymAsync(gymVM.Gym.Id, gymVM.Gym);
+                response = await _api.UpdateGymUserAsync(gymUser.Id, gymUser);
 
 
-                //if (response.IsSuccessStatusCode)
-                //{
-                //	return RedirectToAction(nameof(Index));
-                //}
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
 
-                //else
-                //{
-                //	ModelState.AddModelError(string.Empty, "An Error Occured");
-                //}
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "An Error Occured");
+                }
             }
-
-
 
             return View();
         }
@@ -134,7 +144,7 @@ namespace GymManagement.Web.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             var response = await _api.DeleteGymUserAsync(id);
 

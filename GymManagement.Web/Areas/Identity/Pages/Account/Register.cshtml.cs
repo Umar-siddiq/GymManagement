@@ -123,15 +123,36 @@ namespace GymManagement.Web.Areas.Identity.Pages.Account
                 _roleManager.CreateAsync(new IdentityRole(Roles.Role_Company)).GetAwaiter().GetResult();
             }
 
-            
-            Input = new(){
-                RoleOptions = new List<SelectListItem>{
-                    new SelectListItem { Value = Roles.Role_Trainer, Text= "Trainer"},
-                    new SelectListItem { Value = Roles.Role_Customer, Text= "Customer"},
-                }
+
+            //Input = new(){
+            //    RoleOptions = new List<SelectListItem>{
+            //        new SelectListItem { Value = Roles.Role_Trainer, Text= "Trainer"},
+            //        new SelectListItem { Value = Roles.Role_Customer, Text= "Customer"},
+            //    }
+            //};
+
+
+            Input = new()
+            {
+                RoleOptions = _roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
+                })
             };
 
-            Console.WriteLine(Input.RoleOptions);
+            if (!_roleManager.RoleExistsAsync(Roles.Role_Customer).GetAwaiter().GetResult())
+            {
+
+                _roleManager.CreateAsync(new IdentityRole(Roles.Role_Admin)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(Roles.Role_Company)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(Roles.Role_Customer)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(Roles.Role_Employee)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(Roles.Role_Member)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(Roles.Role_Trainer)).GetAwaiter().GetResult();
+            }
+
+
 
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();

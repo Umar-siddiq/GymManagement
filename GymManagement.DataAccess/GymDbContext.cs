@@ -24,7 +24,7 @@ namespace GymManagement.DataAccess
 
             builder.Entity<GymUser>().HasData(
 
-                new GymUser { Full_Name = "Test Name", Gender = "M", Age = 21, City = "Khaitan", Height = 170, Type = "FullBody", Membership = false, Weight = 55   }
+                new GymUser { Full_Name = "Test Name", Role = "Trainer" ,Gender = "M", Age = 21, City = "Khaitan", Height = 170, Type = "FullBody", Membership = false, Weight = 55   }
                 );
          
             builder.Entity<Gym>().HasData(

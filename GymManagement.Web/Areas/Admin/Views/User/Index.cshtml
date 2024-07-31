@@ -4,7 +4,7 @@
 	<div class="card header bg-primary bg-gradient ml-0 py-3">
 		<div class="row">
 			<div class="col-12 text-center">
-				<h2 class="text-light py-2"> Gym List</h2>
+				<h2 class="text-light py-2"> Gym User List</h2>
 			</div>
 		</div>
 	</div>
@@ -21,8 +21,8 @@
 			<div class="text-end col-6">
 
 
-				<a asp-controller="Gym" asp-action="Create" class="btn btn-primary">
-					Create new Gym Branch <i class="bi bi-plus-circle"></i>
+				<a asp-controller="User" asp-action="Create" class="btn btn-primary">
+					Create new Gym User <i class="bi bi-plus-circle"></i>
 				</a>
 			</div>
 		</div>
@@ -38,11 +38,12 @@
 				<th> Contact Number</th>
 				<th> City </th>
 				<th> Gender </th>
-				<th> MemberShip </th>
 				<th> Age </th>
 				<th> Weight </th>
 				<th> Height </th>
+				<th> MemberShip </th>
 				<th> Type </th>
+				<th> Role</th>
 				<th> Actions </th>
 			</tr>
 
@@ -57,11 +58,13 @@
 					<td> @obj.PhoneNumber</td>
 					<td> @obj.City </td>
 					<td> @obj.Gender </td>
-					<td> @obj.Membership </td>
 					<td> @obj.Age </td>
 					<td> @obj.Weight kg </td>
 					<td> @obj.Height cm </td>
+					<td> @obj.Membership </td>
 					<td> @obj.Type </td>
+					<td> @obj.Role </td>
+					
 					<td>
 						<div class="btn-group" role="group">
 							<a asp-controller="User" asp-action="Update" asp-route-id="@obj.Id" class="btn btn-success mx-2">
