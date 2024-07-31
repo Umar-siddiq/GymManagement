@@ -41,9 +41,14 @@ namespace GymManagement.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> PostgymUser(GymUser gymUser)
         {
-            _db.GymUsers.Add(gymUser);
-            await _db.SaveChangesAsync();
+			gymUser.UserName = gymUser.Email;
+			gymUser.NormalizedUserName = gymUser.UserName.Normalize();
+			gymUser.NormalizedEmail = gymUser.Email.Normalize();
 
+
+
+			_db.GymUsers.Add(gymUser);
+            await _db.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetGymUsers), new { id = gymUser.Id }, gymUser);
         }
@@ -71,36 +76,40 @@ namespace GymManagement.Web.Areas.Admin.Controllers
 
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGymUser(int id)
+        public async Task<IActionResult> DeleteGymUser(string id)
         {
-            var gymUser = await _db.Gyms.FindAsync(id);
+            var gymUser = await _db.GymUsers.FindAsync(id);
 
             if (gymUser == null)
                 return NotFound();
 
-            _db.Gyms.Remove(gymUser);
+            _db.GymUsers.Remove(gymUser);
             await _db.SaveChangesAsync();
 
             return NoContent();
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateGymUser(int id, [FromBody] GymUser gymUser)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateGymUser(string id, [FromBody] GymUser gymUser)
         {
-            GymUser? existingGym = await _db.GymUsers.FindAsync(id);
+            var existingGym = await _db.GymUsers.FindAsync(id);
 
             if (existingGym == null)
             {
                 return NotFound("Gym Not Found");
             }
 
-            existingGym.City = gymUser.City;
+            existingGym.UserName= gymUser.Email;
+            existingGym.NormalizedUserName = existingGym.UserName.Normalize();
+            existingGym.Email = gymUser.Email;
+            existingGym.NormalizedEmail = gymUser.Email.Normalize();
+			existingGym.Role = gymUser.Role;
+			existingGym.City = gymUser.City;
             existingGym.Age = gymUser.Age;
             existingGym.Weight = gymUser.Weight;
             existingGym.Height = gymUser.Height;
             existingGym.Membership = gymUser.Membership;
             existingGym.PhoneNumber = gymUser.PhoneNumber;
-            existingGym.Email = gymUser.Email;
             existingGym.Full_Name = gymUser.Full_Name;
             existingGym.Gender = gymUser.Gender;
             existingGym.Type = gymUser.Type;

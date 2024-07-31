@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@* @using static GymManagement.Data.Models.GymUser, *@
+@using static GymManagement.Utility.Roles
+<!DOCTYPE html>
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,13 +30,14 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if( User.IsInRole(Role_Admin) ){
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="Gym" asp-action="Index">Gyms</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="Index">Users</a>
                         </li>
-
+                        }
                     </ul>
                     <partial name ="_LoginPartial"/>
                 </div>

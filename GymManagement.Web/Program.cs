@@ -92,8 +92,8 @@ app.MapControllerRoute(
     
     );
 
-app.MapControllerRoute(
-	name: "admin",
-	pattern: "{area=Admin}/{controller=Gym}/{action=Index}/{id?}");
+//app.MapControllerRoute(
+//	name: "admin",
+//	pattern: "{area=Admin}/{controller=Gym}/{action=Index}/{id?}");
 
 app.Run();
