@@ -118,6 +118,8 @@ namespace GymManagement.Web.Areas.Admin.Controllers
                     //(jsonString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
                 }
             }
+
+
             return View(gymUser);
         }
 
