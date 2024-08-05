@@ -200,7 +200,7 @@ namespace GymManagement.Web.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return RedirectToAction("Welcome", "Home", new {area="Customer"});
+                        return RedirectToAction("Index", "Home", new {area="Customer"});
                     }
                 }
                 foreach (var error in result.Errors)

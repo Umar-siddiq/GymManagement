@@ -1,5 +1,11 @@
+using GymManagement.Data.IRepository;
 using GymManagement.Data.Models;
 using GymManagement.Data.ViewModels;
+using GymManagement.DataAccess;
+using GymManagement.Utility;
+using GymManagement.Utility.Services;
+using GymManagement.Web.Areas.Admin.Controllers;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,16 +15,28 @@ namespace GymManagement.Web.Areas.Customer.Controllers
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        UserManager<IdentityUser> _userManager;
+        private readonly GymDbContext _db;
+        private readonly IUnitOfWork _unitofwork;
+        private readonly GymUserApiService _api;
+        private readonly ILogger<GymController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(GymUserApiService api, GymDbContext db, IUnitOfWork unitofwork, UserManager<IdentityUser> userManager)
         {
-            _logger = logger;
+            _db = db;
+            _api = api;
+            _unitofwork = unitofwork;
+            _userManager = userManager;
         }
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var gymUser = await _userManager.GetUserAsync(User);
+
+            if (gymUser == null)
+                return RedirectToAction("Login", "Account");
+
+
+            return View(gymUser);
         }
 
         public IActionResult Privacy()
@@ -28,6 +46,15 @@ namespace GymManagement.Web.Areas.Customer.Controllers
 
         public IActionResult Welcome()
         {
+            return View();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update( GymUserVM gymUserVM)
+        {
+
             return View();
         }
 

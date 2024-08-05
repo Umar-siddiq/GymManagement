@@ -7,7 +7,6 @@ using GymManagement.Utility.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace GymManagement.Web.Areas.Admin.Controllers
 {

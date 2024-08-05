@@ -20,7 +20,9 @@ namespace GymManagement.DataAccess.Repository
 			dbset.Add(entity);
 		}
 
-		public T Get(Expression<Func<T, bool>> filter, string? includeproperties = null)
+       
+
+        public T Get(Expression<Func<T, bool>> filter, string? includeproperties = null)
 		{
 			IQueryable<T> query = dbset;
 			query = query.Where(filter);

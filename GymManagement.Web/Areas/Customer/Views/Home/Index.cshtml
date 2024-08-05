@@ -1,11 +1,35 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model GymManagement.Data.Models.GymUser
+ 
 <head>
-<div class="text-center">
-    <h1>Welcome To The Gym</h1>
+    <div class="container-fluid">
+        <div class="text-center">
+            
+            <div>
+                <div class="row">
+                    <div class="col-2">
+                        <h3> Profile </h3>
+                        
+                        <p>
+                        <label>Name :</Label>
+                        @Model.Full_Name
+                        
+                        <br>
+                        <label>Location :</Label>
+                        @Model.City</p>
+                    
 
-</div>
+                    
+                    </div>
+
+                    <div class="col-10">
+                        <h2> Exercises </h2>
+                        <div class="row"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </head>
 
 <body>

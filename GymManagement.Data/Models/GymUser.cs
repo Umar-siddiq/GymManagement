@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
-using System.Net.Cache;
-using System.Reflection.Emit;
 
 
 namespace GymManagement.Data.Models
